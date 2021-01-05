@@ -10,7 +10,11 @@ function getBroodjes(){
         Broodje::new("Broodje kippenwit","3.60","https://broodjes-jipsy.be/wp-content/uploads/2014/08/Broodjes_Jipsy.jpg"),
         Broodje::new("Broodje club","3.70","https://bakkerijaernoudt.be/sites/default/files/styles/large/public/club_00004.jpg?itok=xctOugAl"),
         Broodje::new("Broodje smoske","3.60","https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Dagobert_au_jmbon_et_crudit%C3%A9s.jpg/266px-Dagobert_au_jmbon_et_crudit%C3%A9s.jpg"),
-        Broodje::new("Broodje martino","3.70","https://i2.wp.com/www.seasonwithlove.nl/wp-content/uploads/2014/11/broodjemartino.jpg?fit=1000%2C669&ssl=1"),
+        Broodje::new("Broodje martino","3.70","https://i2.wp.com/www.seasonwithlove.nl/wp-content/uploads/2014/11/broodjemartino.jpg?fit=1000%2C669&ssl=1")
+    );
+}
+function getSalades(){
+    return array(
         Broodje::new("Griekse salade ","7.00","https://www.leukerecepten.nl/wp-content/uploads/2019/07/griekse-salade_v.jpg"),
         Broodje::new("Kipsalade ","7.60","https://i0.wp.com/kitchenista.nl/wp-content/uploads/2017/01/kipsalade.jpg?resize=600%2C320&ssl=1"),
         Broodje::new("Salade Nicoise ","8.00","https://img-3.journaldesfemmes.fr/8COrhFruV2keguuWQqaL0SoViws=/748x499/smart/3a86b25b4fd94561959d9ff592bce391/recipe-jdf/10025061.jpg")

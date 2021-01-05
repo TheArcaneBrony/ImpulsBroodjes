@@ -23,7 +23,7 @@
         body {
             background-color: #242424;
             color: #ffffff;
-            background: linear-gradient(180deg, #242424, rgb(64,64,128));
+            /* background: linear-gradient(180deg, #242424, rgb(64,64,128)); */
             font-family: 'Segoe UI';
             height:100%;
         }
@@ -84,29 +84,27 @@
             animation-duration: 500ms;
         }
 
-        @keyframes ModalOpen {
-            from {
-                width: 0px;
-                height: 0px;
-                opacity: 0;
-            }
+@keyframes ModalOpen {
+    from {
+        width: 0px;
+        height: 0px;
+        opacity: 0;
+    }
+    to {
+        width: 640px;
+        height: 480px;
+        opacity: 1;
+    }
+}
 
-            to {
-                width: 640px;
-                height: 480px;
-                opacity: 1;
-            }
-        }
-
-        @keyframes ModalOpen2 {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
+@keyframes ModalOpen2 {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
     </style>
     <link rel="icon" type="image/png" href="ci.png">
 </head>
@@ -116,41 +114,34 @@
     require "navbar.php";
     ?>
     <script>
-        function PrepareModal() {
-            $('body').append(`<div id='modal-bg'></div>`);
-            $('#modal-bg').click(CloseModal);
-        }
+function PrepareModal() {
+    $('body').append(`<div id='modal-bg'></div>`);
+    $('#modal-bg').click(CloseModal);
+}
+function CloseModal() {
+    $('.modal').animate({
+        opacity: 0,
+        width: 0,
+        height: 0
+    }, 500, function() {
+        $('.modal').remove();
+    });
+    $('#modal-bg').animate({
+        opacity: 0
+    }, 500, function() {
+        $('#modal-bg').remove();
+    });
+}
+var loc = window.location.href.replace("broodjes.php","");
+if (!loc.endsWith('/')) loc += '/';
+function OpenModal(id) {
+    PrepareModal();
+    $('body').append(`<iframe src='${loc+"api/broodje.php?id="+(id-1)}' id='modal' class='modal'></iframe>`);
 
-        function CloseModal() {
-            $('.modal').animate({
-                opacity: 0,
-                width: 0,
-                height: 0
-            }, 500, function() {
-                $('.modal').remove();
-            });
-            $('#modal-bg').animate({
-                opacity: 0
-            }, 500, function() {
-                $('#modal-bg').remove();
-            });
-        }
-
-        var loc = window.location.href.replace("broodjes.php","");
-        if (!loc.endsWith('/')) loc += '/';
-
-        function OpenModal(id) {
-            PrepareModal();
-            $('body').append(`<iframe src='${loc+"api/broodje.php?id="+(id-1)}' id='modal' class='modal'></iframe>`);
-
-        }
-        $(document).ready(function() {
-            $("#broodjes").load("api/getitems.php"); 
-            setInterval(() => {
-                   
-            }, 500);
-            
-        });
+}
+$(document).ready(function() {
+    $("#broodjes").load("api/getitems.php?type=broodjes",function(){$("#salades").load("api/getitems.php?type=salades");})
+});
     </script>
     <div style="text-align: center;">
         <div id="header">
@@ -159,7 +150,7 @@
         </div>
         <hr>
         <div id="broodjes"></div>
-
+        <div id="salades"></div>
         <p></p>
     </div>
 </body>
