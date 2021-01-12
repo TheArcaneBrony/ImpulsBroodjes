@@ -3,6 +3,7 @@
 ini_set('error_reporting', 'on');
 ini_set('display_errors', 'on');
 error_reporting(E_ALL);
+session_start();
 
 $id = $_GET['id'];
     echo "<style>
@@ -38,8 +39,9 @@ $id = $_GET['id'];
     echo "<broodje>
     <img id='preview' loading='lazy' async='' accesskey='0' src='".$broodje->image."'><br>
     <name>".$broodje->name."</name><br>
-    <price>Prijs: € ".$broodje->price."</price><br><br>
-    <div id=ctx><input type=submit value='Bestellen' onclick='order()'></input></div>
+    <price>Prijs: € ".$broodje->price."</price><br><br>";
+    if(!(isset($_SESSION["name"]) && strlen($_SESSION['name']) >= 6)) echo "<b>Gelieve uw naam in te vullen vanboven rechts in deze pagina.</b>"; 
+    else echo "<div id=ctx><input type=submit value='Bestellen' onclick='order()'></input></div>
 </broodje>";
 
     echo "</center>";
