@@ -40,9 +40,13 @@ $id = $_GET['id'];
     <img id='preview' loading='lazy' async='' accesskey='0' src='".$broodje->image."'><br>
     <name>".$broodje->name."</name><br>
     <price>Prijs: € ".$broodje->price."</price><br><br>";
-    if(!(isset($_SESSION["name"]) && strlen($_SESSION['name']) >= 6)) echo "<b>Gelieve uw naam in te vullen vanboven rechts in deze pagina.</b>"; 
-    else echo "<div id=ctx><input type=submit value='Bestellen' onclick='order()'></input></div>
-</broodje>";
+    if(!(isset($_SESSION["name"]) && strlen($_SESSION['name']) >= 6)) { 
+        echo "<b>Gelieve uw naam in te vullen vanboven rechts in deze pagina.</b>"; 
+    }
+    else { 
+        echo "<div id=ctx><input type=submit value='Bestellen' onclick='order()'></input></div>
+</broodje>"; 
+    }
 
     echo "</center>";
 ?>
