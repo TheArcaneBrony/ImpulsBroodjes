@@ -96,7 +96,6 @@ function delay($i)
     <li style="<?php $i = delay($i); ?>"><a href="index.php" style="padding: 6px 8px 0px;"><img src="ci.png" style="max-width: 40px; border-radius: 50%;"></a></li>
     <li style="<?php $i = delay($i); ?>"><a class="<?php active('index.php'); ?>" href="index.php">Home</a></li>
     <li style="<?php $i = delay($i); ?>"><a class="<?php active('broodjes.php'); ?>" href="broodjes.php">Broodjes</a></li>
-    <li style="<?php $i = delay($i); ?>"><a class="<?php active('info.php'); ?>" href="info.php">Info</a></li>
 
     <li style="<?php $i = delay($i); ?> float: right; height:55px; display: none;"><a href="https://login.microsoftonline.com/thearcanebrony.onmicrosoft.com/oauth2/v2.0/authorize?client_id=04e5139d-0354-4423-bbec-e9e572286e49&scope=*&response_type=SessionToken" style="padding: 0px;"><img src="Login.png" style="max-height: 50px;"></a></li>
     <li style="<?php $i = delay($i); ?> float: right; height:55px;">
