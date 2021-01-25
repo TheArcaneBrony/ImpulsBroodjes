@@ -1,0 +1,2 @@
+$("#broodjes>broodje").mouseleave((a)=>{console.log($(a.target).children('.hover').css({'display': 'none'}))})
+$("#broodjes>broodje").mousemove((a)=>{console.log($(a.target).children('.hover').css({'display': 'block'})); console.log(a.clientX)})

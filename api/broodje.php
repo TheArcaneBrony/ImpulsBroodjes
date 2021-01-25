@@ -4,9 +4,13 @@ ini_set('error_reporting', 'on');
 ini_set('display_errors', 'on');
 error_reporting(E_ALL);
 session_start();
-
+include_once 'broodjesprovider.php';
+$items = null;
+if($_GET["type"] == "broodjes") {$items = getBroodjes();}
+else if($_GET["type"] == "salades") {$items = getSalades();}
 $id = $_GET['id'];
-    echo "<style>
+?>
+<style>
         body{color: white;}
         #preview {
             height: 128px;
@@ -27,26 +31,38 @@ $id = $_GET['id'];
             padding-top: 20%;
             display: block;
         }
+        .col {
+            float: left;
+            width: 50%;
+          }
+          .columnLayout:after {
+            display: table;
+            clear: both;
+          }
     </style>
     <script>
     function order(){
-        $('#ctx').load('order.php?id=".$id."')
+        $('#ctx').load('order.php?id="<?php echo $id; ?>."')
     }
     </script>
-    <center>";
-    include 'broodjesprovider.php';
-    $broodje = getBroodjes()[$id];
-    echo "<broodje>
-    <img id='preview' loading='lazy' async='' accesskey='0' src='".$broodje->image."'><br>
-    <name>".$broodje->name."</name><br>
+    <center>
+        <?php
+    $broodje = $items[$id];
+    echo "<h1>".$broodje->name."</h1>
+    <div id='columnLayout'>
+        <div class='col'>
+            <img id='preview' loading='lazy' async='' accesskey='0' src='".$broodje->image."'>
+        </div>
+        <div class='col'>
+        <a>".$broodje->ingredientListHtml."</a>
+        </div>
+    </div><br>
     <price>Prijs: € ".$broodje->price."</price><br><br>";
     if(!(isset($_SESSION["name"]) && strlen($_SESSION['name']) >= 6)) { 
         echo "<b>Gelieve uw naam in te vullen vanboven rechts in deze pagina.</b>"; 
     }
     else { 
-        echo "<div id=ctx><input type=submit value='Bestellen' onclick='order()'></input></div>
-</broodje>"; 
+        echo "<div id=ctx><input type=submit value='Bestellen' onclick='order()'></input></div>"; 
     }
-
-    echo "</center>";
 ?>
+    </center>

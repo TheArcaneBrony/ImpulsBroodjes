@@ -2,7 +2,7 @@
 //laad "sessie" (opgeslagen gegevens zoals gebruikersnaam)
 session_start();
 //importeer broodjes-lijst om naam en prijs op te vragen
-include 'broodjesprovider.php';
+include_once 'broodjesprovider.php';
 //open CSV-database
 $filename = "db.csv";
 try {

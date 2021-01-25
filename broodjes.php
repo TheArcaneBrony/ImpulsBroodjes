@@ -42,7 +42,6 @@
             width: 500px;
             display: inline-block;
             background-color: #2c2c2c;
-            background-color: #a2a2a20f;
             border-image: linear-gradient(0deg, blue,green);
             border-width: 2px;
             border-radius: 25px;
@@ -70,6 +69,7 @@
             animation-delay: 100ms;
             animation-duration: 500ms;
             background-color: #222;
+            z-index: 10001;
         }
 
         #modal-bg {
@@ -82,29 +82,38 @@
             left: 0px;
             animation-name: ModalOpen2;
             animation-duration: 500ms;
+            z-index: 10000;
         }
 
-@keyframes ModalOpen {
-    from {
-        width: 0px;
-        height: 0px;
-        opacity: 0;
-    }
-    to {
-        width: 640px;
-        height: 480px;
-        opacity: 1;
-    }
-}
+        @keyframes ModalOpen {
+            from {
+                width: 0px;
+                height: 0px;
+                opacity: 0;
+            }
+            to {
+                width: 640px;
+                height: 480px;
+                opacity: 0.75;
+            }
+        }
 
-@keyframes ModalOpen2 {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
+        @keyframes ModalOpen2 {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 0.75;
+            }
+        }
+
+        .hover {
+            background-color: #666c;
+            padding: 15px;
+            border-radius: 15px;
+            border: 2px solid black;
+            z-index: 999900;
+        }
     </style>
     <link rel="icon" type="image/png" href="ci.png">
 </head>
@@ -134,13 +143,18 @@ function CloseModal() {
 }
 var loc = window.location.href.replace("broodjes.php","");
 if (!loc.endsWith('/')) loc += '/';
-function OpenModal(id) {
+function OpenModal(id, type) {
     PrepareModal();
-    $('body').append(`<iframe src='${loc+"api/broodje.php?id="+(id-1)}' id='modal' class='modal'></iframe>`);
+    $('body').append(`<iframe src='${loc+"api/broodje.php?id="+(id-1)+"&type="+type}' id='modal' class='modal'></iframe>`);
 
 }
 $(document).ready(function() {
-    $("#broodjes").load("api/getitems.php?type=broodjes",function(){$("#salades").load("api/getitems.php?type=salades");})
+    $("#broodjes").load("api/getitems.php?type=broodjes",function(){
+        $("#salades").load("api/getitems.php?type=salades",function(){
+            $("broodje").mouseout((a)=>{$(a.target).children('.hover').css({'display': 'none'})})
+            $("broodje").mousemove((a)=>{$(a.target).children('.hover').css({'display': 'block', left: a.clientX+15, top: a.clientY+15});})
+        });
+    })
 });
     </script>
     <div style="text-align: center;">

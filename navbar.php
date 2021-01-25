@@ -41,6 +41,7 @@ function delay($i)
         position: sticky;
         top: 0;
         width: 100%;
+        z-index: 9999;
     }
 
     #navbar li {
