@@ -94,7 +94,7 @@ function delay($i)
     }
 </style>
 <ul id="navbar">
-    <li style="<?php $i = delay($i); ?>"><a href="index.php" style="padding: 6px 8px 0px;"><img src="ci.png" style="max-width: 40px; border-radius: 50%;"></a></li>
+    <li style="<?php $i = delay($i); ?>"><a href="index.php" style="padding: 6px 8px 0px;"><img src="logo_met_cirkel.png" style="max-width: 40px; border-radius: 50%;"></a></li>
     <li style="<?php $i = delay($i); ?>"><a class="<?php active('index.php'); ?>" href="index.php">Home</a></li>
     <li style="<?php $i = delay($i); ?>"><a class="<?php active('broodjes.php'); ?>" href="broodjes.php">Broodjes</a></li>
 
