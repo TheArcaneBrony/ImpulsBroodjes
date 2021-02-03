@@ -106,7 +106,7 @@
     }
 }
     </style>
-    <link rel="icon" type="image/png" href="ci.png">
+    <link rel="icon" type="image/png" href="logo_met_cirkel.png">
 </head>
 
 <body>
@@ -145,7 +145,7 @@ $(document).ready(function() {
     </script>
     <div style="text-align: center;">
         <div id="header">
-            <h1 style="margin-bottom: 0px;">Impuls broodjes</h1>
+            <h1 style="margin-bottom: 0px;">IMPULS BROODJES</h1>
             <b>DE Corona-veilige broodjesdienst</b>
         </div>
         <hr>
