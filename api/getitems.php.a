@@ -41,10 +41,9 @@ foreach ($items as $key => $value) {
 //antwoord op de web-aanvraag met HTML-code om weer te geven
 function getBroodjeHtml(&$i, $broodje){
     echo "<broodje style='". delay($i)."' onclick='OpenModal(".$i.", \"".$_GET["type"]."\")'>
-    <img id='preview' loading='lazy' async accesskey='0' src='".$broodje->image."'>
-    <name>".$broodje->name."</name>
-    <price>€ ".$broodje->price."</price><br><br>
-    <div class='hover'><a>Ingredienten: ".$broodje->ingredientListHtml."</a></div>
+    <img id='preview' loading='lazy' async accesskey='0' src='".$broodje["broodje_image"]."'>
+    <name>".$broodje["broodje_name"]."</name>
+    <price>€ ".$broodje["broodje_price"]."</price><br><br>
 </broodje>";
 }
 ?>

@@ -1,17 +1,38 @@
 <?php
-function getBroodjes(){
-    return array(
-        Broodje::new("Broodje kaas",explode(", ", "kaas, mayo, ei, tomaat, komkommer, sla, wortel"),"3.40","https://www.managejekanker.nl/wp-content/uploads/2016/04/broodje-kaas-1.jpg"),
-        Broodje::new("Broodje mozarella extra",explode(", ", "mozzarella, pesto, olijven, zongedroogde tomaten, rucola"),"3.70","https://www.managejekanker.nl/wp-content/uploads/2016/04/broodje-kaas-1.jpg"),
-        Broodje::new("Broodje brie noten",explode(", ", "Brie, honing, noten, sla"),"3.70","https://f.jwwb.nl/public/m/y/q/temp-wnpqzwvhamcdljawxeam/0xhh3j/broodjebriehoningnoten.png"),
-        Broodje::new("Broodje geitenkaas appel",explode(", ", "geitenkaas, honing, pijnboompitten, appel, sla"),"3.90","https://i0.wp.com/etenmetroos.nl/wp-content/uploads/2017/08/geit.jpg?resize=900%2C450"),
-        Broodje::new("Broodje ham",explode(", ", "ham, ei, tomaat, komkommer, sla, wortel, mayo"),"3.50","https://www.hoogerbrugcuisine.nl/foto/47/1000/files/Afbeeldingen/zacht_wit_broodje_ham.jpg"),
-        Broodje::new("Broodje prepare",explode(", ", "Preparé, ei, tomaat, komkommer, wortel, sla, mayo"),"3.50","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzlRVEki80bEoRsSmxrJ906aBQqudVtnKHsg&usqp=CAU"),
-        Broodje::new("Broodje kippenwit",explode(", ", "kippenwit, ei, tomaat, komkommer, sla, wortel, mayo"),"3.60","https://broodjes-jipsy.be/wp-content/uploads/2014/08/Broodjes_Jipsy.jpg"),
-        Broodje::new("Broodje club",explode(", ", "préparé, augurk, tomaat, verse ui, sla, tartaarsaus"),"3.70","https://bakkerijaernoudt.be/sites/default/files/styles/large/public/club_00004.jpg?itok=xctOugAl"),
-        Broodje::new("Broodje smoske",explode(", ", "ham, kaas, ei, tomaat, komkommer, sla, wortel, mayo"),"3.60","https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Dagobert_au_jmbon_et_crudit%C3%A9s.jpg/266px-Dagobert_au_jmbon_et_crudit%C3%A9s.jpg"),
-        Broodje::new("Broodje martino",explode(", ", "préparé, augurk, ansjovis, zilveruitjes, tomaat, tabasco, sla, martinosaus"),"3.70","https://i2.wp.com/www.seasonwithlove.nl/wp-content/uploads/2014/11/broodjemartino.jpg?fit=1000%2C669&ssl=1")
-    );
+    ini_set('error_reporting', 'on');
+    ini_set('display_errors', 'on');
+    error_reporting(E_ALL);
+include_once "../config.php";
+$mysqli = new mysqli(DOMAIN, USERNAME, PASSWORD, SCHEMA);
+function getBroodjes() {
+    // mysqli_query()
+    global $mysqli;
+    $stmt = mysqli_prepare($mysqli, "select * from impulsbroodjes.broodjes where broodje_type = '';");
+    //$stmt = $mysqli->prepare("INSERT INTO CountryLanguage VALUES (?, ?, ?, ?)");
+    //$stmt->bind_param('sssd', $code, $language, $official, $percent);
+    if(!mysqli_stmt_execute($stmt)){
+        echo "Error:<br>" . $mysqli->error;
+    }
+    $result = mysqli_stmt_get_result($stmt);
+    $rows = $result->num_rows;
+    $items = array();
+    for ($i=0; $i < $rows; $i++) { 
+        $item = mysqli_fetch_assoc($result);
+        $items[$i] = Broodje::new($item["broodje_name"], explode(", ", $item["broodje_ingredients"]), $item["broodje_price"], $item["broodje_image"]);
+    }
+    return $items;
+    //  return array(
+    //     Broodje::new("Broodje kaas",explode(", ", "kaas, mayo, ei, tomaat, komkommer, sla, wortel"),"3.40","https://www.managejekanker.nl/wp-content/uploads/2016/04/broodje-kaas-1.jpg"),
+    //     Broodje::new("Broodje mozarella extra",explode(", ", "mozzarella, pesto, olijven, zongedroogde tomaten, rucola"),"3.70","https://www.managejekanker.nl/wp-content/uploads/2016/04/broodje-kaas-1.jpg"),
+    //     Broodje::new("Broodje brie noten",explode(", ", "Brie, honing, noten, sla"),"3.70","https://f.jwwb.nl/public/m/y/q/temp-wnpqzwvhamcdljawxeam/0xhh3j/broodjebriehoningnoten.png"),
+    //     Broodje::new("Broodje geitenkaas appel",explode(", ", "geitenkaas, honing, pijnboompitten, appel, sla"),"3.90","https://i0.wp.com/etenmetroos.nl/wp-content/uploads/2017/08/geit.jpg?resize=900%2C450"),
+    //     Broodje::new("Broodje ham",explode(", ", "ham, ei, tomaat, komkommer, sla, wortel, mayo"),"3.50","https://www.hoogerbrugcuisine.nl/foto/47/1000/files/Afbeeldingen/zacht_wit_broodje_ham.jpg"),
+    //     Broodje::new("Broodje prepare",explode(", ", "Preparé, ei, tomaat, komkommer, wortel, sla, mayo"),"3.50","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzlRVEki80bEoRsSmxrJ906aBQqudVtnKHsg&usqp=CAU"),
+    //     Broodje::new("Broodje kippenwit",explode(", ", "kippenwit, ei, tomaat, komkommer, sla, wortel, mayo"),"3.60","https://broodjes-jipsy.be/wp-content/uploads/2014/08/Broodjes_Jipsy.jpg"),
+    //     Broodje::new("Broodje club",explode(", ", "préparé, augurk, tomaat, verse ui, sla, tartaarsaus"),"3.70","https://bakkerijaernoudt.be/sites/default/files/styles/large/public/club_00004.jpg?itok=xctOugAl"),
+    //     Broodje::new("Broodje smoske",explode(", ", "ham, kaas, ei, tomaat, komkommer, sla, wortel, mayo"),"3.60","https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Dagobert_au_jmbon_et_crudit%C3%A9s.jpg/266px-Dagobert_au_jmbon_et_crudit%C3%A9s.jpg"),
+    //     Broodje::new("Broodje martino",explode(", ", "préparé, augurk, ansjovis, zilveruitjes, tomaat, tabasco, sla, martinosaus"),"3.70","https://i2.wp.com/www.seasonwithlove.nl/wp-content/uploads/2014/11/broodjemartino.jpg?fit=1000%2C669&ssl=1")
+    // );
 }
 function getSalades(){
     return array(
@@ -31,6 +52,7 @@ class Broodje {
         $broodje->csv = $name.",".$price." EUR";
         return $broodje;
     }
+    public $id;
     public $name;
     public $ingredients;
     public $image;
@@ -38,4 +60,13 @@ class Broodje {
     public $ingredientListHtml;
     public $csv;
 }
+
+// if(isset($_GET)){
+//     echo "Broodjes<br>";
+    
+//     //getBroodjes();
+//     echo str_replace("\n", "<br>", json_encode(getBroodjes(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ));
+//     echo "Salades<br>";
+//     //var_dump(getSalades());
+// }
 ?>
