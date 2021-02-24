@@ -54,6 +54,7 @@
             width: 64px;
             border-radius: 32px;
             vertical-align: middle;
+            object-fit: cover;
         }
 
         #modal-content {
@@ -119,7 +120,7 @@
         /* modal navigation */
         .modalNav, .modalNav > img {
             max-width: 64px;
-            position: absolute;
+            position: fixed;
             top: 45%;
             filter: brightness(5);
             z-index: 100001;
@@ -139,6 +140,8 @@
     require "navbar.php";
     ?>
     <script>
+    var currentCategory = "";
+    var currentId = "";
 function PrepareModal() {
     $('body').append(`<div id='modal'></div>`);
     $('#modal').append(`<div id='modal-bg'></div>`);

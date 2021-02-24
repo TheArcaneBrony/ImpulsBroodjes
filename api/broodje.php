@@ -16,6 +16,7 @@ $id = $_GET['id'];
             width: 128px;
             border-radius: 64px;
             vertical-align: middle;
+            object-fit: cover;
         }
         body {
             background-color: #242424;
