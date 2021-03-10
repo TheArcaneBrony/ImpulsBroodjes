@@ -63,7 +63,7 @@ if(!array_key_exists($id, $items)){
     </style>
     <script>
     function order(){
-        $('#ctx').load('order.php?id="<?php echo $id; ?>."')
+        $('#ctx').load('order.php?id=<?php echo $id; ?>&type=<?php echo $type; ?>');
     }
     </script>
     <center>

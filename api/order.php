@@ -1,6 +1,4 @@
 <?php
-//laad "sessie" (opgeslagen gegevens zoals gebruikersnaam)
-session_start();
 //importeer broodjes-lijst om naam en prijs op te vragen
 include_once 'broodjesprovider.php';
 //open CSV-database
@@ -11,12 +9,14 @@ try {
 $db = fopen($filename, 'a');
 //voer nieuwe gegevens in
 fwrite($db, $_SESSION["name"].",");
-fwrite($db, getBroodjes()[$_GET['id']]->csv);
+fwrite($db, getItems($_GET['type'])[$_GET['id']]->csv);
+// fwrite($db, getBroodjes()[$_GET['id']]->csv);
 fwrite($db, "\n");
 //sluit het bestand en antwoord status
 fclose($db);
     echo "Bestelling doorgevoerd!";
-} catch (\Throwable $th) {
+} catch (Throwable $th) {
     echo "Bestelling mislukt!";
+    echo $th;
 }
 ?>
