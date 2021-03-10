@@ -8,10 +8,10 @@ CREATE TABLE `impulsbroodjes`.`broodjes` (
   `broodje_image` VARCHAR(45) NOT NULL,
   `broodje_image_thumbnail` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`broodje_id`),
-  UNIQUE INDEX `broodje_naam_UNIQUE` (`broodje_name` ASC) VISIBLE,
-  UNIQUE INDEX `broodje_ingredienten_UNIQUE` (`broodje_ingredients` ASC) VISIBLE,
-  UNIQUE INDEX `broodje_image_thumbnail_UNIQUE` (`broodje_image_thumbnail` ASC) VISIBLE,
-  UNIQUE INDEX `broodje_image_UNIQUE` (`broodje_image` ASC) VISIBLE);
+  UNIQUE INDEX `broodje_name_UNIQUE` (`broodje_name` ASC),
+  UNIQUE INDEX `broodje_ingredients_UNIQUE` (`broodje_ingredients` ASC),
+  UNIQUE INDEX `broodje_image_thumbnail_UNIQUE` (`broodje_image_thumbnail` ASC),
+  UNIQUE INDEX `broodje_image_UNIQUE` (`broodje_image` ASC) );
 
 ALTER TABLE `impulsbroodjes`.`broodjes` 
 CHANGE COLUMN `broodje_image` `broodje_image` VARCHAR(45) NULL ,
@@ -73,3 +73,18 @@ UPDATE `impulsbroodjes`.`broodjes` SET `broodje_type` = 'salade' WHERE (`broodje
 UPDATE `impulsbroodjes`.`broodjes` SET `broodje_type` = 'salade' WHERE (`broodje_id` = '12');
 UPDATE `impulsbroodjes`.`broodjes` SET `broodje_type` = 'salade' WHERE (`broodje_id` = '13');
 UPDATE `impulsbroodjes`.`broodjes` SET `broodje_type` = 'andere' WHERE (`broodje_id` = '14');
+
+-- impulsbroodjes.users definition
+
+CREATE TABLE `users` (
+  `user_id` int NOT NULL AUTO_INCREMENT,
+  `user_email` varchar(45) DEFAULT NULL,
+  `user_firstname` varchar(45) DEFAULT NULL,
+  `user_lastname` varchar(45) DEFAULT NULL,
+  `user_password` varchar(60) DEFAULT NULL,
+  `user_enabled` tinyint DEFAULT '1',
+  `user_is_admin` tinyint DEFAULT '0',
+  `user_can_view_orders` tinyint DEFAULT '0',
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `user_email_UNIQUE` (`user_email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
