@@ -148,9 +148,9 @@ function PrepareModal() {
     $('#modal-bg').click(CloseModal);
     $("#modal").append(`
     <a class="modalNav" id="prev">
-        <img src="res/Back_Arrow.png">
+        <img src="res/Back_Arrow.png" onclick="Navigate(false)">
     </a>
-    <a class="modalNav" id="next">
+    <a class="modalNav" id="next" onclick="Navigate(true)">
         <img src="res/Next_Arrow.png">
     </a>`);
     
@@ -189,17 +189,27 @@ if (!loc.endsWith('/')) loc += '/';
 function OpenModal(id, type) {
     PrepareModal();
     $('#modal').append(`<iframe src='${loc+"api/broodje.php?id="+(id-1)+"&type="+type}' id='modal-content'></iframe>`);
-
+    currentId = id;
 }
+function Navigate(direction){
+    $("#modal-content")[0].src = $("#modal-content")[0].src.replace("id="+currentId, "id=" + (direction ? currentId+1 : currentId-1))
+    currentId = Number($("#modal-content")[0].src.split('=')[1].split('&')[0]);
+    console.log(currentId);
+}
+var broodjeTypes;
+var currentId;
 $(document).ready(function() {
-    $("#broodjes").load("api/getitems.php?type=broodjes",function(){
-        $("#salades").load("api/getitems.php?type=salades",function(){
-            
-        });
+    
+    $.getJSON("api/broodjesprovider.php?getTypes", function(result){
+        broodjeTypes = result;
+	result.forEach((a)=>{
+        $("#items").append(`<div id="${a}"></div>`)
+        $(`#${a}`).load(`api/getitems.php?type=${a}`);
+    });
     })
 });
     </script>
-    <div style="text-align: center;">
+    <div id="items" style="text-align: center;">
         <div id="header">
             <h1 style="margin-bottom: 0px;">IMPULS BROODJES</h1>
             <b>DE Corona-veilige broodjesdienst</b>

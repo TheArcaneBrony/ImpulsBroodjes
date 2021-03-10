@@ -4,10 +4,31 @@ ini_set('error_reporting', 'on');
 ini_set('display_errors', 'on');
 error_reporting(E_ALL);
 include_once 'broodjesprovider.php';
-$items = null;
-if($_GET["type"] == "broodjes") {$items = getBroodjes();}
-else if($_GET["type"] == "salades") {$items = getSalades();}
+$type = $_GET["type"];
+if(!typeExists($type)){
+    echo "Invalid type!";
+    exit();
+}
+$types = getTypes();
+$items = getItems($type);
 $id = $_GET['id'];
+$url = sprintf(
+    "%s://%s%s",
+    isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
+    $_SERVER['SERVER_NAME'],
+    $_SERVER['REQUEST_URI']
+);
+$baseurl = str_split($url, strpos($url, '?'))[0];
+//check if id is negative
+if($id<0) {
+    header('Location: '.$baseurl.'?id='.count(getAllItems())+$id.'&type='.$type);
+    exit();
+}
+//id doesn't exist in this item type, loop back under next type
+if(!array_key_exists($id, $items)){
+    header('Location: '.$baseurl.'?id='.($id-count($items)).'&type='.$types[(array_search($type, $types)+1)%count($types)]);
+    exit();
+}
 ?>
 <style>
         body{color: white;}

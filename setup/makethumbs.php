@@ -25,7 +25,7 @@ $i=0;
         if ($im2 !== FALSE) {
             imagepng(imagescale($im2, 150), $i.".png", 0);
         }
-        echo "<img style='border-radius:64px; height: 128px; width: 128px;' src='/admin/".$i.".png'></img>";
+        echo "<img style='border-radius:64px; height: 128px; width: 128px;' src='".$i.".png'></img>";
         $items[$i] = Broodje::new($item["broodje_name"], explode(", ", $item["broodje_ingredients"]), $item["broodje_price"], $item["broodje_image"]);
     }
 ?>

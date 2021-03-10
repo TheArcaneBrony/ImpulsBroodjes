@@ -33,15 +33,19 @@ if(!isset($_GET["type"])){
   exit();
 }
 $items = null;
-if($_GET["type"] == "broodjes") {$items = getBroodjes(); echo "<h2>Broodjes</h2><hr style='width: 250px;'>";}
-else if($_GET["type"] == "salades") {$items = getSalades(); echo "<h2>Salades</h2><hr style='width: 250px;'>";}
-foreach ($items as $key => $value) {
+$type = filter_var($_GET["type"], FILTER_SANITIZE_STRING);
+if(typeExists($type)){
+  $items = getItems($type);
+  echo "<h2>".$type."</h2><hr style='width: 250px;'>";
+  foreach ($items as $key => $value) {
     getBroodjeHtml($i, $value);
 }
+}
+
 //antwoord op de web-aanvraag met HTML-code om weer te geven
 function getBroodjeHtml(&$i, $broodje){
     echo "<broodje style='". delay($i)."' onclick='OpenModal(".$i.", \"".$_GET["type"]."\")'>
-    <img id='preview' loading='lazy' async accesskey='0' src='".$broodje->image."'>
+    <img id='preview' loading='lazy' async accesskey='0' src='".$broodje->thumb128."'>
     <name>".$broodje->name."</name>
     <price>€ ".$broodje->price."</price><br><br>
     <div class='hover'><a>Ingredienten: ".$broodje->ingredientListHtml."</a></div>
