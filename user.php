@@ -6,21 +6,19 @@ error_reporting(E_ALL);
 include_once "config.php";
 $mysqli = new mysqli(DOMAIN, USERNAME, PASSWORD, SCHEMA);
 
-$email = "";
+$email = $_SESSION["user_email"];
 $password = "";
 $newpassword = "";
 $correctlogin = false;
 if(isset($_POST["login"])){
-    if($_POST["email"] !== ""){
-        $email = $_POST["email"];
-    }
+    
     if($_POST["password"] !== ""){
         $password = $_POST["password"];
     }
     if($_POST["newpassword"] !== "" && $_POST["newpassword2"] !== "" && $_POST["newpassword"] == $_POST["newpassword2"]){
         $newpassword = $_POST["newpassword"];
     }
-    if($_POST["email"] !== "" && $_POST["password"] !== ""){
+    if( $_POST["password"] !== ""){
         $stmt = $mysqli->prepare("select user_password from impulsbroodjes.users where user_email = ?");
         $stmt->bind_param('s', $email);
         if(!mysqli_stmt_execute($stmt)){
@@ -32,14 +30,13 @@ if(isset($_POST["login"])){
                 $correctlogin = true;
          }
         if($correctlogin) {
-            $stmt = $mysqli->prepare("select * from impulsbroodjes.users where user_email = ?");
+            password_hash("password hier", PASSWORD_BCRYPT, ["cost" => 10]);
+            $stmt = $mysqli->prepare("update * from impulsbroodjes.users where user_email = ?");
             $stmt->bind_param('s', $email);
             if(!mysqli_stmt_execute($stmt)){
                 echo "Error:<br>" . $mysqli->error;
             }
-            $result = mysqli_stmt_get_result($stmt);
-            $row = mysqli_fetch_assoc($result);
-            $_SESSION = $row;
+            
             //header("Location: /");
             if($newpassword != ""){
                 
