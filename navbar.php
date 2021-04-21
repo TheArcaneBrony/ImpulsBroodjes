@@ -98,16 +98,19 @@ function delay($i)
     <li style="<?php $i = delay($i); ?>"><a class="<?php active('index.php'); ?>" href="index.php">Home</a></li>
     <li style="<?php $i = delay($i); ?>"><a class="<?php active('broodjes.php'); ?>" href="broodjes.php">Broodjes</a></li>
 
-    <li style="<?php $i = delay($i); ?> float: right; height:55px;">
+    
     <?php
         if(isset($_SESSION["user_id"])){
-            echo "<a class='".active('user.php')."' href='user.php'>".$_SESSION["user_firstname"].' '.$_SESSION["user_lastname"]."</a>";
+            
+            echo '<li style="';$i = delay($i);echo ' float: right;"><a href="logout.php" style="padding: 6px 8px 0px;"><img src="https://www.iconpacks.net/icons/2/free-exit-logout-icon-2857-thumb.png" style="max-width: 40px; filter: invert(1);"></a></li>';
+            echo "<li style='"; $i = delay($i);echo " float: right; height:55px;'><a class='";active('user.php');echo "' href='user.php'>".$_SESSION["user_firstname"].' '.$_SESSION["user_lastname"]."</a></li>";
+            
         }
         else {
-            echo "<a class='".active('login.php')."' href='login.php'>Log in</a>";
+            echo "<li style='"; $i = delay($i);echo " float: right; height:55px;'><a class='";active('login.php');echo "' href='login.php'>Log in</a></li>";
         }
     ?>
-    </li>
+    
 
 </ul>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

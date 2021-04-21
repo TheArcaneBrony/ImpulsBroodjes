@@ -72,19 +72,19 @@ if(!array_key_exists($id, $items)){
     echo "<h1>".$broodje->name."</h1>
     <div id='columnLayout'>
         <div class='col'>
-            <img id='preview' loading='lazy' async='' accesskey='0' src='".$broodje->image."'>
+            <img id='preview' loading='lazy' async='' accesskey='0' src='".$broodje->thumb128."'>
         </div>
         <div class='col'>
         <a>".$broodje->ingredientListHtml."</a>
         </div>
     </div><br>
     <price>Prijs: € ".$broodje->price."</price><br><br>";
-    if(!(isset($_SESSION["name"]) && strlen($_SESSION['name']) >= 6)) { 
-        echo "<b>Gelieve uw naam in te vullen vanboven rechts in deze pagina.</b>"; 
+    if(!(isset($_SESSION["user_firstname"]))) {
+        echo "<b>Gelieve in te loggen!</b>"; 
     }
     else { 
         echo "<div id=ctx>
-        <input id=count type=number value=1 min=1 max=4></input> broodje(s)
+        <input id=count type=number value=1 min=1 max=5></input> 
         <input type=submit value='Bestellen' onclick='order()'></input>
         </div>"; 
     }
