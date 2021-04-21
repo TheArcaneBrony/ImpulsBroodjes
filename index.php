@@ -54,6 +54,7 @@
             <p><h2>Het GIP-project van 6IT</h2></p>
             <p><h3>Welkom op de broodjes webshop van Campus Impuls.</h3></p>
             <p>De website is bedoelt voor het bestellen van broodjes/salades te vergemakkelijken in tijden van COVID-19.<br></p>
+            <p>U kunt broodjes bestellen t.e.m 8:28u</p>
         </div>
     </div>
 </body>
