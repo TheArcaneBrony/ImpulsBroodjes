@@ -1,3 +1,4 @@
 ﻿.vscode/settings.json
 *.csv
-res/img
+res/img/**
+res/thumbs/

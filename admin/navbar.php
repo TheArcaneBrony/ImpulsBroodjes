@@ -2,7 +2,7 @@
 ini_set('error_reporting', 'on');
 ini_set('display_errors', 'on');
 error_reporting(E_ALL);
-session_start();
+include_once 'config.php';
 $i = 0;
 
 function active($currect_page)

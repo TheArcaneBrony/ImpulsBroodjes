@@ -63,7 +63,7 @@ if(!array_key_exists($id, $items)){
     </style>
     <script>
     function order(){
-        $('#ctx').load('order.php?id=<?php echo $id; ?>&type=<?php echo $type; ?>');
+        $('#ctx').load('order.php?id=<?php echo $id; ?>&type=<?php echo $type; ?>&count='+$("#count")[0].value);
     }
     </script>
     <center>
@@ -83,7 +83,10 @@ if(!array_key_exists($id, $items)){
         echo "<b>Gelieve uw naam in te vullen vanboven rechts in deze pagina.</b>"; 
     }
     else { 
-        echo "<div id=ctx><input type=submit value='Bestellen' onclick='order()'></input></div>"; 
+        echo "<div id=ctx>
+        <input id=count type=number value=1 min=1 max=4></input> broodje(s)
+        <input type=submit value='Bestellen' onclick='order()'></input>
+        </div>"; 
     }
 ?>
     </center>

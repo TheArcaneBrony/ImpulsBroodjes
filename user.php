@@ -8,6 +8,7 @@ $mysqli = new mysqli(DOMAIN, USERNAME, PASSWORD, SCHEMA);
 
 $email = "";
 $password = "";
+$newpassword = "";
 $correctlogin = false;
 if(isset($_POST["login"])){
     if($_POST["email"] !== ""){
@@ -15,6 +16,9 @@ if(isset($_POST["login"])){
     }
     if($_POST["password"] !== ""){
         $password = $_POST["password"];
+    }
+    if($_POST["newpassword"] !== "" && $_POST["newpassword2"] !== "" && $_POST["newpassword"] == $_POST["newpassword2"]){
+        $newpassword = $_POST["newpassword"];
     }
     if($_POST["email"] !== "" && $_POST["password"] !== ""){
         $stmt = $mysqli->prepare("select user_password from impulsbroodjes.users where user_email = ?");
@@ -36,7 +40,10 @@ if(isset($_POST["login"])){
             $result = mysqli_stmt_get_result($stmt);
             $row = mysqli_fetch_assoc($result);
             $_SESSION = $row;
-            header("Location: /");
+            //header("Location: /");
+            if($newpassword != ""){
+                
+            }
         }
     }
 }
@@ -94,14 +101,19 @@ if(isset($_POST["login"])){
         <div id="broodjes">
             <img src="bl.png" style="border-radius:50%; width: 128px;"><br>
             <p><h1>Impuls Broodjes</h1></p><hr style="width: 256px;">
-            <p><h2>Login</h2></p>
+            <p><h2>Gebruikerbeheer: <?php echo $_SESSION["user_firstname"].' '.$_SESSION["user_lastname"]; ?></h2></p>
             <form action="login.php" method="post">
-                <b>E-mail</b><br>
-                <input name="email" value="<?php echo $email; ?>"><br>
-                <br>Wachtwoord</b><br>
-                <input name="password" value="<?php echo $password; ?>" type="password"><br>
-                <?php if(!$correctlogin) echo "<b style='color: #f00;'>Gelieve uw informatie te controleren!</b><br>"; ?>
-                <button name="login">Log in</button>
+            
+            <?php if(!$correctlogin) echo "<b style='color: #f00;'>Gelieve uw informatie te controleren!</b><br>"; ?>
+                <b>E-mail:</b><br>
+                <input name="email" value="<?php echo $_SESSION["user_email"]; ?>"><br>
+                <br><b>Wachtwoord</b><br>
+                <input name="password" value="<?php echo $password; ?>"><br>
+                <br><b>Nieuw wachtwoord</b><br>
+                <input name="newpassword"><br>
+                <br><b>Nieuw wachtwoord herhalen</b><br>
+                <input name="newpassword2"><br><br>
+                <button name="login">Informatie bijwerken</button>
             </form>
         </div>
     </div>
