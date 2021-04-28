@@ -31,8 +31,8 @@ if(isset($_POST["login"])){
          }
         if($correctlogin) {
             password_hash("password hier", PASSWORD_BCRYPT, ["cost" => 10]);
-            $stmt = $mysqli->prepare("update * from impulsbroodjes.users where user_email = ?");
-            $stmt->bind_param('s', $email);
+            $stmt = $mysqli->prepare("update impulsbroodjes.users set user_password = ? where user_email = ?");
+            $stmt->bind_param('ss',$newpassword, $email);
             if(!mysqli_stmt_execute($stmt)){
                 echo "Error:<br>" . $mysqli->error;
             }
