@@ -41,7 +41,7 @@ function getItems($type){
         $items = array();
         for ($i=0; $i < $rows; $i++) { 
             $item = mysqli_fetch_assoc($result);
-            $items[$i] = Broodje::new($item["broodje_name"], explode(", ", $item["broodje_ingredients"]), $item["broodje_price"], $item["broodje_image_thumbnail_1024"], $item["broodje_image_thumbnail_128"]);
+            $items[$i] = Broodje::new($item["broodje_id"], $item["broodje_name"], explode(", ", $item["broodje_ingredients"]), $item["broodje_price"], $item["broodje_image_thumbnail_1024"], $item["broodje_image_thumbnail_128"]);
         }
         return $items;
     }
@@ -61,8 +61,9 @@ function getItemCount($type){
     return count(getItems($type));
 }
 class Broodje {
-    public static function new($name, $ingredients, $price, $image, $thumb128){
+    public static function new($id, $name, $ingredients, $price, $image, $thumb128){
         $broodje = new Broodje();
+        $broodje->id = $id;
         $broodje->name = $name;
         $broodje->ingredients = $ingredients;
         $broodje->thumb128 = $thumb128;

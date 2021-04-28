@@ -122,7 +122,7 @@
             max-width: 64px;
             position: fixed;
             top: 45%;
-            filter: brightness(5);
+            /* filter: brightness(5); */
             z-index: 100001;
         }
         a#prev {
@@ -215,8 +215,5 @@ $(document).ready(function() {
             <b>DE Corona-veilige broodjesdienst</b>
         </div>
         <hr>
-        <div id="broodjes"></div>
-        <div id="salades"></div>
-        <p></p>
     </div>
 </body>

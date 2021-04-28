@@ -6,20 +6,22 @@ error_reporting(E_ALL);
 include_once "config.php";
 $mysqli = new mysqli(DOMAIN, USERNAME, PASSWORD, SCHEMA);
 
-$email = $_SESSION["user_email"];
+$email = "";
 $password = "";
 $newpassword = "";
 $correctlogin = false;
 if(isset($_POST["login"])){
-    
+    if($_POST["email"] !== ""){
+        $email = $_POST["email"];
+    }
     if($_POST["password"] !== ""){
         $password = $_POST["password"];
     }
     if($_POST["newpassword"] !== "" && $_POST["newpassword2"] !== "" && $_POST["newpassword"] == $_POST["newpassword2"]){
         $newpassword = $_POST["newpassword"];
     }
-    if( $_POST["password"] !== ""){
-        $stmt = $mysqli->prepare("select user_password from impulsbroodjes.users where user_email = ?");
+    if($_POST["email"] !== "" && $_POST["password"] !== ""){
+        $stmt = $mysqli->prepare("SELECT user_password FROM impulsbroodjes.users WHERE user_email = ?");
         $stmt->bind_param('s', $email);
         if(!mysqli_stmt_execute($stmt)){
             echo "Error:<br>" . $mysqli->error;
@@ -28,22 +30,20 @@ if(isset($_POST["login"])){
         $hash = mysqli_fetch_row($result);
         if($hash != null && !empty($hash) && password_verify($password, $hash[0])) {
                 $correctlogin = true;
-         }
+        }
         if($correctlogin) {
-            password_hash("password hier", PASSWORD_BCRYPT, ["cost" => 10]);
-            $stmt = $mysqli->prepare("update impulsbroodjes.users set user_password = ? where user_email = ?");
-            $stmt->bind_param('ss',$newpassword, $email);
-            if(!mysqli_stmt_execute($stmt)){
-                echo "Error:<br>" . $mysqli->error;
-            }
-            
-            //header("Location: /");
             if($newpassword != ""){
-                
+                $stmt = $mysqli->prepare("UPDATE impulsbroodjes.users SET user_password=? WHERE user_email=?");
+                $passhash = password_hash($newpassword, PASSWORD_BCRYPT, ["cost" => 10]);
+                $stmt->bind_param('ss', $passhash , $email);
+                if(!mysqli_stmt_execute($stmt)){
+                    echo "Error:<br>" . $mysqli->error;
+                }
             }
         }
     }
 }
+if(!isset($_POST)) $correctlogin = true;
 ?>
 <!doctype html>
 
@@ -99,17 +99,17 @@ if(isset($_POST["login"])){
             <img src="bl.png" style="border-radius:50%; width: 128px;"><br>
             <p><h1>Impuls Broodjes</h1></p><hr style="width: 256px;">
             <p><h2>Gebruikerbeheer: <?php echo $_SESSION["user_firstname"].' '.$_SESSION["user_lastname"]; ?></h2></p>
-            <form action="login.php" method="post">
+            <form action="user.php" method="post">
             
             <?php if(!$correctlogin) echo "<b style='color: #f00;'>Gelieve uw informatie te controleren!</b><br>"; ?>
                 <b>E-mail:</b><br>
                 <input name="email" value="<?php echo $_SESSION["user_email"]; ?>"><br>
                 <br><b>Wachtwoord</b><br>
-                <input name="password" value="<?php echo $password; ?>"><br>
+                <input name="password" type=password value="<?php echo $password; ?>"><br>
                 <br><b>Nieuw wachtwoord</b><br>
-                <input name="newpassword"><br>
+                <input name="newpassword" type=password><br>
                 <br><b>Nieuw wachtwoord herhalen</b><br>
-                <input name="newpassword2"><br><br>
+                <input name="newpassword2" type=password><br><br>
                 <button name="login">Informatie bijwerken</button>
             </form>
         </div>

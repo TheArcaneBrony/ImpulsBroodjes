@@ -1,22 +1,15 @@
 <?php
 //importeer broodjes-lijst om naam en prijs op te vragen
 include_once 'broodjesprovider.php';
-//open CSV-database
-$filename = "db.csv";
-try {
-    if(!file_exists($filename)) {fclose(fopen($filename, "w"));
+//check login
+if (!isset($_SESSION["user_id"])) echo "Gelieve in te loggen!";
+//voeg in in database
+if ($_SESSION["user_email"] != "demo") {
+    $stmt = $mysqli->prepare("insert into impulsbroodjes.orders (user_id, broodje_id, aantal) values (?,?,?)");
+    $stmt->bind_param('iii', $_SESSION["user_id"], getItems($_GET['type'])[$_GET['id']]->id, $_GET["count"]);
+    if (!mysqli_stmt_execute($stmt)) {
+        echo "Error:<br>" . $mysqli->error;
+    }
 }
-$db = fopen($filename, 'a');
-//voer nieuwe gegevens in
-fwrite($db, $_SESSION["name"].",");
-fwrite($db, getItems($_GET['type'])[$_GET['id']]->csv);
-// fwrite($db, getBroodjes()[$_GET['id']]->csv);
-fwrite($db, "\n");
-//sluit het bestand en antwoord status
-fclose($db);
-    echo "Bestelling doorgevoerd!";
-} catch (Throwable $th) {
-    echo "Bestelling mislukt!";
-    echo $th;
-}
-?>
+echo "Bestelling doorgevoerd!<br>Gelieve aan het onthaal €" . (getItems($_GET['type'])[$_GET['id']]->price * $_GET["count"]) . " te betalen om je bestelling te voltooien!<br>Als dit niet voor 10u gebeurt, wordt je bestelling geannuleerd!";
+exit();

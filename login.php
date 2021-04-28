@@ -17,7 +17,7 @@ if(isset($_POST["login"])){
         $password = $_POST["password"];
     }
     if($_POST["email"] !== "" && $_POST["password"] !== ""){
-        $stmt = $mysqli->prepare("select user_password from impulsbroodjes.users where user_email = ?");
+        $stmt = $mysqli->prepare("select user_password from impulsbroodjes.users where user_email = ? and user_enabled = true");
         $stmt->bind_param('s', $email);
         if(!mysqli_stmt_execute($stmt)){
             echo "Error:<br>" . $mysqli->error;

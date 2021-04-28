@@ -85,7 +85,8 @@ if(!array_key_exists($id, $items)){
     else { 
         echo "<div id=ctx>
         <input id=count type=number value=1 min=1 max=5></input> 
-        <input type=submit value='Bestellen' onclick='order()'></input>
+        <input type=submit value='Bestellen' onclick='order()'></input><br>
+        <p>Bestellen voor 8u28 om vandaag nog geldig te zijn</p>
         </div>"; 
     }
 ?>
